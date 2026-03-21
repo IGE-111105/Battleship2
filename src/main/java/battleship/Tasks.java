@@ -163,6 +163,7 @@ public class Tasks {
 				boolean success = fleet.addShip(s);
 				if (success)
 					i++;
+
 				else
 					LOGGER.info("Falha na criacao de {} {} {}", s.getCategory(), s.getBearing(), s.getPosition());
 			} else {
