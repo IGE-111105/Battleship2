@@ -3,11 +3,40 @@ package battleship;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
+
 
 public class Game implements IGame
 {
+	private static final Logger logger = LogManager.getLogger(GameTimer.class);
+	private GameTimer turnTimer;
+	private GameTimer totalGameTimer;
+
+	public void startTurn() {
+		turnTimer.reset();
+		turnTimer.start();}
+	public void endTurn() {
+		turnTimer.pause();
+		logger.info("Tempo de jogada: " + turnTimer.getFormattedTime());
+	}
+
+	public void startGame() {
+		totalGameTimer.start();
+	}
+
+	public String getTurnTime() {
+		return turnTimer.getFormattedTime();
+	}
+
+	public String getTotalGameTime() {
+		return totalGameTimer.getFormattedTime();
+	}
+
 	/**
 	 * Prints the game board by representing the positions of ships, adjacent tiles,
 	 * shots, and other game elements onto the console. The method also optionally
@@ -161,6 +190,8 @@ public class Game implements IGame
 	public Game(IFleet myFleet)
 	{
 		this.moveNumber = 1;
+		this.turnTimer = new GameTimer();
+		this.totalGameTimer = new GameTimer();
 
 		this.alienMoves = new ArrayList<IMove>();
 		this.myMoves = new ArrayList<IMove>();
@@ -452,4 +483,6 @@ public class Game implements IGame
 			System.out.println("| Maldito sejas, Java Sparrow, eu voltarei, glub glub glub ... |");
 			System.out.println("+--------------------------------------------------------------+");
 	}
+
+
 }

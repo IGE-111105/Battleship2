@@ -11,6 +11,11 @@ import java.util.Scanner;
  */
 public interface IGame
 {
+	void startGame();
+
+	String getTurnTime();
+
+	String getTotalGameTime();
 	/**
 	 * Simulates a random enemy firing action on the game board.
 	 *

@@ -12,4 +12,11 @@
   "hits" : 25,
   "sunkShips" : 11,
   "result" : "DERROTA"
+}, {
+  "timestamp" : "2026-03-21 21:31:22",
+  "moves" : 23,
+  "shots" : 69,
+  "hits" : 25,
+  "sunkShips" : 11,
+  "result" : "DERROTA"
 } ]

@@ -33,6 +33,7 @@ public class Tasks {
 	private static final String STATUS = "estado";
 	private static final String SIMULA = "simula";
 	private static final String SCOREBOARD = "scoreboard";
+	private static final String TEMPO = "tempo";
 	/**
 	 * This task also tests the fighting element of a round of three shots
 	 */
@@ -51,6 +52,7 @@ public class Tasks {
 				case GERAFROTA:
 					myFleet = Fleet.createRandom();
 					game = new Game(myFleet);
+					game.startGame();
 					game.printMyBoard(false, true);
 					break;
 				case LEFROTA:
@@ -107,6 +109,15 @@ public class Tasks {
 				case SCOREBOARD:
 					ScoreboardManager.printScoreboard();
 					break;
+
+				case TEMPO:
+					if (game != null) {
+						System.out.println("Tempo total do jogo: " + game.getTotalGameTime());
+						System.out.println("Tempo da última jogada: " + game.getTurnTime());
+					} else {
+						System.out.println("Nenhum jogo iniciado!");
+					}
+					break;
 				default:
 					System.out.println("Que comando é esse??? Repete ...");
 			}
@@ -131,6 +142,7 @@ public class Tasks {
 		System.out.println("- " + TIROS + ": Lista os tiros válidos realizados (* = tiro em navio, o = tiro na água)");
 		System.out.println("- " + DESISTIR + ": Encerra o jogo.");
 		System.out.println("- " + SCOREBOARD + ": Mostra o histórico dos jogos anteriores.");
+		System.out.println("- " + TEMPO + ": Mostra o tempo total do jogo e tempo da última jogada.");
 		System.out.println("===============================================================");
 	}
 	/**
