@@ -9,8 +9,8 @@ import java.util.Scanner;
 /**
  * The interface Game.
  */
-public interface IGame
-{
+public interface IGame {
+
 	void startGame();
 
 	String getTurnTime();

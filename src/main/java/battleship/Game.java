@@ -199,6 +199,7 @@ public class Game implements IGame
 		this.alienFleet = new Fleet();
 		this.myFleet = myFleet;
 
+
 		this.countInvalidShots = 0;
 		this.countRepeatedShots = 0;
 		this.countHits = 0;

@@ -16,6 +16,7 @@ public class Tasks {
 	private static final Logger LOGGER = LogManager.getLogger();
 
 	/**
+	 *
 	 * The constant GOODBYE_MESSAGE.
 	 */
 	private static final String GOODBYE_MESSAGE = "Bons ventos!";

@@ -31,7 +31,6 @@ public class GameTimer {
             logger.info("Cronômetro pausado");
         }
     }
-
     public void resume() {
         if (!isRunning && pauseTime != null) {
             Duration pausedDuration = Duration.between(pauseTime, Instant.now());
