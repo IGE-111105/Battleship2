@@ -32,7 +32,7 @@ public class Tasks {
 	private static final String MAPA = "mapa";
 	private static final String STATUS = "estado";
 	private static final String SIMULA = "simula";
-
+	private static final String SCOREBOARD = "scoreboard";
 	/**
 	 * This task also tests the fighting element of a round of three shots
 	 */
@@ -104,6 +104,9 @@ public class Tasks {
                 case AJUDA:
                     menuHelp();
                     break;
+				case SCOREBOARD:
+					ScoreboardManager.printScoreboard();
+					break;
 				default:
 					System.out.println("Que comando é esse??? Repete ...");
 			}
@@ -127,6 +130,7 @@ public class Tasks {
 		System.out.println("- " + SIMULA + ": Simula um jogo completo.");
 		System.out.println("- " + TIROS + ": Lista os tiros válidos realizados (* = tiro em navio, o = tiro na água)");
 		System.out.println("- " + DESISTIR + ": Encerra o jogo.");
+		System.out.println("- " + SCOREBOARD + ": Mostra o histórico dos jogos anteriores.");
 		System.out.println("===============================================================");
 	}
 	/**

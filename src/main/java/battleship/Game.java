@@ -433,8 +433,20 @@ public class Game implements IGame
 	{
 		Game.printBoard(this.alienFleet, this.myMoves, show_shots, show_legend);
 	}
+	public int getTotalMoves() {
+		return alienMoves.size();
+	}
 
+	public int getTotalShots() {
+		int totalShots = 0;
+		for (IMove move : alienMoves) {
+			totalShots += move.getShots().size();
+		}
+		return totalShots;
+	}
 	public void over() {
+			ScoreboardManager.addGameRecord(this);
+
 			System.out.println();
 			System.out.println("+--------------------------------------------------------------+");
 			System.out.println("| Maldito sejas, Java Sparrow, eu voltarei, glub glub glub ... |");
