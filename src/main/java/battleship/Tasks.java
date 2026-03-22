@@ -5,6 +5,7 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+import battleship.PDFExporter;
 
 /**
  * The type Tasks.
@@ -74,10 +75,14 @@ public class Tasks {
 
 						if (game.getRemainingShips() == 0) {
 							game.over();
+
+							PDFExporter.exportGame((Game) game); // ✅ ADICIONADO
+
 							System.exit(0);
 						}
 					}
 					break;
+
 				case SIMULA:
 					if (game != null) {
 						while (game.getRemainingShips() > 0){
@@ -87,12 +92,15 @@ public class Tasks {
 							try {
 								Thread.sleep(3000);
 							} catch (InterruptedException e) {
-								Thread.currentThread().interrupt(); // Best practice: restore interrupt status
+								Thread.currentThread().interrupt();
 							}
 						}
 
 						if (game.getRemainingShips() == 0) {
 							game.over();
+
+							PDFExporter.exportGame((Game) game); // ✅ ADICIONADO
+
 							System.exit(0);
 						}
 					}
