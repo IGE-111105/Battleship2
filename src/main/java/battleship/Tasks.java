@@ -14,7 +14,7 @@ public class Tasks {
 	 * The constant LOGGER.
 	 */
 	private static final Logger LOGGER = LogManager.getLogger();
-
+	public static java.util.function.Consumer<IGame> onBoardUpdate = null;
 	/**
 	 * The constant GOODBYE_MESSAGE.
 	 */
@@ -52,6 +52,7 @@ public class Tasks {
 					myFleet = Fleet.createRandom();
 					game = new Game(myFleet);
 					game.printMyBoard(false, true);
+					if (onBoardUpdate != null) onBoardUpdate.accept(game);
 					break;
 				case LEFROTA:
 					myFleet = buildFleet(in);
