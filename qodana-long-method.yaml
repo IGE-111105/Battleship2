@@ -1,0 +1,27 @@
+# Número de aluno: 110886
+# Nome: Marta Fonseca
+# Cheiro no código: Long Method (Método Longo)
+version: "1.0"
+
+profile:
+  name: qodana.recommended
+  include:
+    - name: OverlyLongMethod          # Inspeção principal para Long Method
+    - name: OverlyComplexMethod       # Complementar (complexidade alta)
+  # exclude: []   # descomenta se quiseres desativar outras inspeções
+
+# Configuração da inspeção OverlyLongMethod (métricas do livro)
+inspections:
+  OverlyLongMethod:
+    enabled: true
+    options:
+      maxStatements: 30          # Valor inicial sugerido no livro ~20-30 statements
+      # Outras opções possíveis: maxLines, etc. (ajusta conforme testes)
+
+  OverlyComplexMethod:
+    enabled: true
+    options:
+      complexityThreshold: 10    # Cyclomatic Complexity (valor comum no livro)
+
+# Quality gate global (podes ajustar)
+failThreshold: 0                 # Falha o build se encontrar 1 ou mais Long Methods
