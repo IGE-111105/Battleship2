@@ -1,0 +1,40 @@
+# Número de aluno: 110886
+# Nome: Marta Fonseca
+# Cheiro no código: Long Method (Método Longo)
+# Baseado em: Object-Oriented Metrics in Practice + Qodana + IntelliJ OverlyLongMethod
+
+name: Qodana - Long Method Quality Gate
+
+on:
+  workflow_dispatch:      # Permite correr manualmente
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  qodana:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+          fetch-depth: 0   # Necessário para análise completa
+
+      - name: 'Qodana Scan - Long Method Detection'
+        uses: JetBrains/qodana-action@v2025.3
+        with:
+          args: '--fail-threshold 0'   # Quality gate: falha se encontrar qualquer Long Method
+          # Pode adicionar --baseline para ignorar problemas antigos (opcional)
+        env:
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}  # Opcional: se quiseres dashboard no Qodana Cloud
+
+      - name: Upload SARIF report
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
