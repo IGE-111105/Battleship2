@@ -19,6 +19,11 @@
 
 ---
 
+Link Vídeo Youtube:
+https://youtu.be/TRIc1tIkMAo
+
+Foram implementadas as seguintes funcionalidade: visualização gráfica dos tabuleiros, impressão das jogadas em PDF, registo do tempo gasto em cada jogada e um scoreboard para guardar e consultar jogos anteriores.
+
 ## 🎯 Project Overview
 This project serves as a template and reference for students learning **Object-Oriented Programming (OOP)** and **Software Quality**. It simulates a battleship environment where players must strategically place ships and sink the enemy fleet.
 
