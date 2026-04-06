@@ -1,0 +1,25 @@
+# IGE-105446 - AfonsoRamos1234
+name: Qodana - Long Parameter List Detection
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  qodana:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Qodana Scan
+        uses: JetBrains/qodana-action@v2023.3
+        with:
+          args: >-
+            --property=idea.inspection.MethodWithTooManyParameters.enabled=true
+            --property=idea.inspection.MethodWithTooManyParameters.limit=3
+        env:
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
