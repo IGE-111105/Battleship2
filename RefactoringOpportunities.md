@@ -2,10 +2,10 @@
 |---------------------------------------|------------------------|----------------------------|----------|
 | Game.java::printBoard                 | Long Method            | Extract Method             | 110886       |
 | Game.java::printBoard                 | Multiple loops         | Extract Method             | 110886    |
-| Game.java::printBoard                 | Complex logic          | Decompose Conditional      | 110886    |
+| Game.java::printBoard                 | Complex logic          | Decompose Conditional      | XXXXX    |
 | Game.java                             | Large Class            | Extract Class              | 110886    |
 | Game.java                             | Too many fields        | Encapsulate Field          | 110886    |
-| Game.java::randomEnemyFire            | Multiple loops         | Extract Method             | XXXXX    |
+| Game.java::randomEnemyFire            | Multiple loops         | Extract Method             | 110886    |
 | Game.java::fireSingleShot             | Too many negations     | Decompose Conditional      | XXXXX    |
 | Game.java::fireSingleShot             | Multiple return points | Introduce Variable         | XXXXX    |
 | Tasks.java::menu                      | Long Method            | Extract Method             | XXXXX    |
