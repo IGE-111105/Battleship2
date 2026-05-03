@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -56,11 +57,7 @@ public class Game implements IGame
 		assert fleet != null;
 		assert moves != null;
 
-		char[][] map = new char[BOARD_SIZE][BOARD_SIZE];
-
-		for (int r = 0; r < BOARD_SIZE; r++)
-			for (int c = 0; c < BOARD_SIZE; c++)
-				map[r][c] = EMPTY_MARKER;
+		char[][] map = initializeMap();
 
 		for (IShip ship : fleet.getShips()) {
 			for (IPosition ship_pos : ship.getPositions())
@@ -116,6 +113,15 @@ public class Game implements IGame
 			System.out.println("'" + SHOT_SHIP_MARKER + "'->Tiro certeiro, '" + SHOT_WATER_MARKER + "'->Tiro na água");
 		}
 		System.out.println();
+	}
+
+	private static char[] @NotNull [] initializeMap() {
+		char[][] map = new char[BOARD_SIZE][BOARD_SIZE];
+
+		for (int r = 0; r < BOARD_SIZE; r++)
+			for (int c = 0; c < BOARD_SIZE; c++)
+				map[r][c] = EMPTY_MARKER;
+		return map;
 	}
 
 	/**

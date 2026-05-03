@@ -73,4 +73,21 @@ public class BoardView extends GridPane {
             }
         }
     }
+    /**
+     * Gets the cells.
+     *
+     * @return the cells
+     */
+    public Rectangle[][] getCells() {
+        return cells;
+    }
+    /**
+ * Gets cell color.
+ * @param row the row
+ * @param col the col
+ * @return the cell color
+ */
+    public Color getCellColor(int row, int col) {
+        return (Color) cells[row][col].getFill();
+    }
 }
