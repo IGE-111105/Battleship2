@@ -136,6 +136,37 @@ mvn test
 > Use the `-Dtest=ClassName` flag to run specific test suites during development.
 
 ---
+
+## 🔄 Continuous Integration
+
+This project uses **GitHub Actions** for Continuous Integration (CI).
+
+The workflow runs automatically on every **push** and **pull request** to the `main` branch.
+
+### Workflow Actions
+
+* Checkout repository
+* Setup **Java 17**
+* Cache Maven dependencies
+* Execute **JUnit tests**
+* Build project
+
+### Workflow File
+
+```text
+.github/workflows/maven.yml
+```
+
+### Run Locally
+
+```bash
+mvn test
+```
+
+> [!NOTE]
+> All code changes are automatically validated through GitHub Actions before integration into the main branch, ensuring build stability and test reliability.
+
+---
 ## Promt para estratégia:
 
 Considere que é um perito no famoso jogo da Batalha Naval, aqui numa versão do tempo dos Descobrimentos Portugueses, jogado num tabuleiro com linhas identificadas de A a J e colunas de 1 a 10.
