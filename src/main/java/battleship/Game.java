@@ -254,14 +254,25 @@ public class Game implements IGame
 		// Criar uma instância de Random com uma seed baseada no timestamp atual
 		Random random = new Random(System.currentTimeMillis());
 
-		Set<IPosition> usablePositions = new HashSet<IPosition>();
-		for (int r = 0; r < BOARD_SIZE; r++)
-			for (int c = 0; c < BOARD_SIZE; c++)
-				usablePositions.add(new Position(r, c));
+		Set<IPosition> usablePositions = generateAvailablePositions();
 
-		this.myFleet.getSunkShips().forEach(ship -> usablePositions.removeAll(ship.getAdjacentPositions()));
-		this.alienMoves.forEach(move ->  usablePositions.removeAll(move.getShots()));
+		List<IPosition> shots = generateRandomShots(usablePositions, random);
 
+		printShots(shots);
+
+		this.fireShots(shots);
+
+		return Game.jsonShots(shots);
+	}
+
+	private static void printShots(List<IPosition> shots) {
+		System.out.print("rajada ");
+		for (IPosition shot : shots)
+			System.out.print(shot + " ");
+		System.out.println();
+	}
+
+	private static @NotNull List<IPosition> generateRandomShots(Set<IPosition> usablePositions, Random random) {
 		List<IPosition> candidateShots = new ArrayList<>(usablePositions);
 
 		// Criar lista para armazenar os tiros
@@ -286,15 +297,18 @@ public class Game implements IGame
 			while (shots.size() < Game.NUMBER_SHOTS)
 				shots.add(newShot);
 		}
+		return shots;
+	}
 
-		System.out.print("rajada ");
-		for (IPosition shot : shots)
-			System.out.print(shot + " ");
-		System.out.println();
+	private @NotNull Set<IPosition> generateAvailablePositions() {
+		Set<IPosition> usablePositions = new HashSet<IPosition>();
+		for (int r = 0; r < BOARD_SIZE; r++)
+			for (int c = 0; c < BOARD_SIZE; c++)
+				usablePositions.add(new Position(r, c));
 
-		this.fireShots(shots);
-
-		return Game.jsonShots(shots);
+		this.myFleet.getSunkShips().forEach(ship -> usablePositions.removeAll(ship.getAdjacentPositions()));
+		this.alienMoves.forEach(move ->  usablePositions.removeAll(move.getShots()));
+		return usablePositions;
 	}
 
 
