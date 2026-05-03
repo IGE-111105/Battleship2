@@ -137,19 +137,34 @@ mvn test
 
 ---
 
-##🔄 Continuous Integration
-This project uses GitHub Actions for Continuous Integration (CI).
-The workflow runs automatically on every push and pull request to the main branch.
-Workflow actions:
-Checkout repository
-Setup Java 17
-Cache Maven dependencies
-Execute JUnit tests
-Build project
-Workflow file:
+## 🔄 Continuous Integration
+
+This project uses **GitHub Actions** for Continuous Integration (CI).
+
+The workflow runs automatically on every **push** and **pull request** to the `main` branch.
+
+### Workflow Actions
+
+* Checkout repository
+* Setup **Java 17**
+* Cache Maven dependencies
+* Execute **JUnit tests**
+* Build project
+
+### Workflow File
+
+```text
 .github/workflows/maven.yml
-Local execution:
+```
+
+### Run Locally
+
+```bash
 mvn test
+```
+
+> [!NOTE]
+> All code changes are automatically validated through GitHub Actions before integration into the main branch, ensuring build stability and test reliability.
 
 ---
 ## Promt para estratégia:
