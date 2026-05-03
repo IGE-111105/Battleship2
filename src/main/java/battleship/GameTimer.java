@@ -4,6 +4,9 @@ import org.apache.logging.log4j.Logger;
 import java.time.Duration;
 import java.time.Instant;
 
+/**
+ * The type Game timer.
+ */
 public class GameTimer {
     private static final Logger logger = LogManager.getLogger(GameTimer.class);
 
@@ -12,11 +15,17 @@ public class GameTimer {
     private Duration totalPausedDuration;
     private boolean isRunning;
 
+    /**
+     * Instantiates a new Game timer.
+     */
     public GameTimer() {
         this.totalPausedDuration = Duration.ZERO;
         this.isRunning = false;
     }
 
+    /**
+     * Start.
+     */
     public void start() {
         if (!isRunning) {
             this.startTime = Instant.now();
@@ -24,6 +33,10 @@ public class GameTimer {
             logger.info("Cronômetro iniciado");
         }
     }
+
+    /**
+     * Pause.
+     */
     public void pause() {
         if (isRunning) {
             this.pauseTime = Instant.now();
@@ -31,6 +44,10 @@ public class GameTimer {
             logger.info("Cronômetro pausado");
         }
     }
+
+    /**
+     * Resume.
+     */
     public void resume() {
         if (!isRunning && pauseTime != null) {
             Duration pausedDuration = Duration.between(pauseTime, Instant.now());
@@ -40,6 +57,11 @@ public class GameTimer {
         }
     }
 
+    /**
+     * Gets elapsed seconds.
+     *
+     * @return the elapsed seconds
+     */
     public long getElapsedSeconds() {
         if (startTime == null) return 0;
 
@@ -47,6 +69,12 @@ public class GameTimer {
         Duration elapsed = Duration.between(startTime, endTime).minus(totalPausedDuration);
         return Math.max(0, elapsed.getSeconds());
     }
+
+    /**
+     * Gets formatted time.
+     *
+     * @return the formatted time
+     */
     public String getFormattedTime() {
         long seconds = getElapsedSeconds();
         long hours = seconds / 3600;
@@ -56,6 +84,9 @@ public class GameTimer {
         return String.format("%02d:%02d:%02d", hours, minutes, secs);
     }
 
+    /**
+     * Reset.
+     */
     public void reset() {
         this.startTime = null;
         this.pauseTime = null;

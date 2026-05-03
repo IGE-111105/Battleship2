@@ -15,6 +15,9 @@ public class Tasks {
 	 * The constant LOGGER.
 	 */
 	private static final Logger LOGGER = LogManager.getLogger();
+	/**
+	 * The On board update.
+	 */
 	public static java.util.function.Consumer<IGame> onBoardUpdate = null;
 	/**
 	 *
@@ -36,6 +39,7 @@ public class Tasks {
 	private static final String SIMULA = "simula";
 	private static final String SCOREBOARD = "scoreboard";
 	private static final String TEMPO = "tempo";
+
 	/**
 	 * This task also tests the fighting element of a round of three shots
 	 */
@@ -155,6 +159,7 @@ public class Tasks {
 		System.out.println("- " + TEMPO + ": Mostra o tempo total do jogo e tempo da última jogada.");
 		System.out.println("===============================================================");
 	}
+
 	/**
 	 * This operation allows the build up of a fleet, given user data
 	 *

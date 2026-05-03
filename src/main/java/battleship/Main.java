@@ -38,13 +38,7 @@ public class Main extends Application
 		gameThread.start();
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}	/**
-	 * Main.
-	 *
-	 * @param args the args
-	 */
+
 	public static void main(String[] args)
     {
 		System.out.println("***  Battleship  ***");
