@@ -59,13 +59,7 @@ public class Game implements IGame
 
 		char[][] map = initializeMap();
 
-		for (IShip ship : fleet.getShips()) {
-			for (IPosition ship_pos : ship.getPositions())
-				map[ship_pos.getRow()][ship_pos.getColumn()] = SHIP_MARKER;
-			if (!ship.stillFloating())
-				for (IPosition adjacent_pos : ship.getAdjacentPositions())
-					map[adjacent_pos.getRow()][adjacent_pos.getColumn()] = SHIP_ADJACENT_MARKER;
-		}
+		placeShips(fleet, map);
 
 		if (show_shots)
 			for (IMove move : moves)
@@ -113,6 +107,16 @@ public class Game implements IGame
 			System.out.println("'" + SHOT_SHIP_MARKER + "'->Tiro certeiro, '" + SHOT_WATER_MARKER + "'->Tiro na água");
 		}
 		System.out.println();
+	}
+
+	private static void placeShips(IFleet fleet, char[][] map) {
+		for (IShip ship : fleet.getShips()) {
+			for (IPosition ship_pos : ship.getPositions())
+				map[ship_pos.getRow()][ship_pos.getColumn()] = SHIP_MARKER;
+			if (!ship.stillFloating())
+				for (IPosition adjacent_pos : ship.getAdjacentPositions())
+					map[adjacent_pos.getRow()][adjacent_pos.getColumn()] = SHIP_ADJACENT_MARKER;
+		}
 	}
 
 	private static char[] @NotNull [] initializeMap() {
