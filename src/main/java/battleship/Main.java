@@ -1,7 +1,5 @@
-/**
- * 
- */
 package battleship;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -9,47 +7,29 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-/**
- * The type Main.
- *
- * @author britoeabreu
- * @author adrianolopes
- * @author miguelgoulao
- */
-public class Main extends Application
-{
-	static BoardView boardView;
+public class Main extends Application {
 
-	@Override
-	public void start(Stage stage) {
-		boardView = new BoardView();
+    static BoardView boardView;
 
-		Tasks.onBoardUpdate = boardView::refresh;  // hook into Tasks
+    @Override
+    public void start(Stage stage) {
+        boardView = new BoardView();
 
-		VBox root = new VBox(10, new Label("My Board"), boardView);
-		root.setPadding(new Insets(15));
+        Tasks.onBoardUpdate = boardView::refresh;
 
-		stage.setScene(new Scene(root));
-		stage.setTitle("Battleship");
-		stage.show();
+        VBox root = new VBox(10, new Label("My Board"), boardView);
+        root.setPadding(new Insets(15));
 
-		Thread gameThread = new Thread(Tasks::menu);
-		gameThread.setDaemon(true);  // closes with the window
-		gameThread.start();
-	}
+        stage.setScene(new Scene(root));
+        stage.setTitle("Battleship");
+        stage.show();
 
-	public static void main(String[] args) {
-		launch(args);
-	}	/**
-	 * Main.
-	 *
-	 * @param args the args
-	 */
-	public static void main(String[] args)
-    {
-		System.out.println("***  Battleship  ***");
-
-		Tasks.menu();
+        Thread gameThread = new Thread(Tasks::menu);
+        gameThread.setDaemon(true);
+        gameThread.start();
     }
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
