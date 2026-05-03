@@ -311,7 +311,21 @@ public class Game implements IGame
 		return usablePositions;
 	}
 
+	private void incrementHits() {
+		this.countHits++;
+	}
 
+	private void incrementInvalidShots() {
+		countInvalidShots++;
+	}
+
+	private void incrementRepeatedShots() {
+		countRepeatedShots++;
+	}
+
+	private void incrementSinks() {
+		countSinks++;
+	}
 	/**
 	 * Reads and processes the enemy fire input from the specified scanner.
 	 * The method expects input describing positions for enemy shots. It verifies
@@ -416,12 +430,12 @@ public class Game implements IGame
 		assert pos != null;
 
 		if (!pos.isInside()) {
-			countInvalidShots++;
+			incrementInvalidShots();
 			return new ShotResult(false, false, null, false);
 		}
 
 		if (isRepeated || repeatedShot(pos)) {
-			countRepeatedShots++;
+			incrementRepeatedShots();
 			return new ShotResult(true, true, null, false);
 		}
 
@@ -431,9 +445,9 @@ public class Game implements IGame
 		else
 		{
 			ship.shoot(pos);
-			countHits++;
+			incrementHits();
 			if (!ship.stillFloating()) {
-				countSinks++;
+				incrementSinks();
 			}
 			return new ShotResult(true, false, ship, !ship.stillFloating());
 		}
