@@ -7,12 +7,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import java.util.List;
 
+/**
+ * The type Board view.
+ */
 public class BoardView extends GridPane {
 
     private static final int CELL_SIZE = 45;
     private static final int SIZE = Game.BOARD_SIZE;
     private final Rectangle[][] cells = new Rectangle[SIZE][SIZE];
 
+    /**
+     * Instantiates a new Board view.
+     */
     public BoardView() {
         setHgap(2);
         setVgap(2);
@@ -33,7 +39,9 @@ public class BoardView extends GridPane {
         }
     }
 
-    /** Called from the game thread — safely dispatches to the JavaFX thread */
+    /**
+     * Called from the game thread — safely dispatches to the JavaFX thread  @param game the game
+     */
     public void refresh(IGame game) {
         Platform.runLater(() -> update(game.getMyFleet(), game.getAlienMoves()));
     }
@@ -64,5 +72,22 @@ public class BoardView extends GridPane {
                         .setFill(ship != null ? Color.ORANGERED : Color.WHITE);
             }
         }
+    }
+    /**
+     * Gets the cells.
+     *
+     * @return the cells
+     */
+    public Rectangle[][] getCells() {
+        return cells;
+    }
+    /**
+ * Gets cell color.
+ * @param row the row
+ * @param col the col
+ * @return the cell color
+ */
+    public Color getCellColor(int row, int col) {
+        return (Color) cells[row][col].getFill();
     }
 }

@@ -3,11 +3,41 @@ package battleship;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
+
 
 public class Game implements IGame
 {
+	private static final Logger logger = LogManager.getLogger(GameTimer.class);
+	private GameTimer turnTimer;
+	private GameTimer totalGameTimer;
+
+	public void startTurn() {
+		turnTimer.reset();
+		turnTimer.start();}
+	public void endTurn() {
+		turnTimer.pause();
+		logger.info("Tempo de jogada: " + turnTimer.getFormattedTime());
+	}
+
+	public void startGame() {
+		totalGameTimer.start();
+	}
+
+	public String getTurnTime() {
+		return turnTimer.getFormattedTime();
+	}
+
+	public String getTotalGameTime() {
+		return totalGameTimer.getFormattedTime();
+	}
+
 	/**
 	 * Prints the game board by representing the positions of ships, adjacent tiles,
 	 * shots, and other game elements onto the console. The method also optionally
@@ -27,11 +57,7 @@ public class Game implements IGame
 		assert fleet != null;
 		assert moves != null;
 
-		char[][] map = new char[BOARD_SIZE][BOARD_SIZE];
-
-		for (int r = 0; r < BOARD_SIZE; r++)
-			for (int c = 0; c < BOARD_SIZE; c++)
-				map[r][c] = EMPTY_MARKER;
+		char[][] map = initializeMap();
 
 		for (IShip ship : fleet.getShips()) {
 			for (IPosition ship_pos : ship.getPositions())
@@ -87,6 +113,15 @@ public class Game implements IGame
 			System.out.println("'" + SHOT_SHIP_MARKER + "'->Tiro certeiro, '" + SHOT_WATER_MARKER + "'->Tiro na água");
 		}
 		System.out.println();
+	}
+
+	private static char[] @NotNull [] initializeMap() {
+		char[][] map = new char[BOARD_SIZE][BOARD_SIZE];
+
+		for (int r = 0; r < BOARD_SIZE; r++)
+			for (int c = 0; c < BOARD_SIZE; c++)
+				map[r][c] = EMPTY_MARKER;
+		return map;
 	}
 
 	/**
@@ -161,12 +196,15 @@ public class Game implements IGame
 	public Game(IFleet myFleet)
 	{
 		this.moveNumber = 1;
+		this.turnTimer = new GameTimer();
+		this.totalGameTimer = new GameTimer();
 
 		this.alienMoves = new ArrayList<IMove>();
 		this.myMoves = new ArrayList<IMove>();
 
 		this.alienFleet = new Fleet();
 		this.myFleet = myFleet;
+
 
 		this.countInvalidShots = 0;
 		this.countRepeatedShots = 0;
@@ -452,4 +490,6 @@ public class Game implements IGame
 			System.out.println("| Maldito sejas, Java Sparrow, eu voltarei, glub glub glub ... |");
 			System.out.println("+--------------------------------------------------------------+");
 	}
+
+
 }

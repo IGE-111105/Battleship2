@@ -1,0 +1,15 @@
+[ {
+  "timestamp" : "2026-03-21 01:20:40",
+  "moves" : 26,
+  "shots" : 78,
+  "hits" : 25,
+  "sunkShips" : 11,
+  "result" : "DERROTA"
+}, {
+  "timestamp" : "2026-03-21 01:23:06",
+  "moves" : 25,
+  "shots" : 75,
+  "hits" : 25,
+  "sunkShips" : 11,
+  "result" : "DERROTA"
+} ]

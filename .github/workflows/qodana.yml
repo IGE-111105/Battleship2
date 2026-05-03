@@ -1,4 +1,4 @@
-# IGE-92500 - Nuno Venâncio
+# 92500 - Nuno Venâncio
 
 name: Qodana Code Quality
 
@@ -10,8 +10,8 @@ pull_request:
 jobs:
 qodana:
 runs-on: ubuntu-latest
-  
-  ```
+
+```
 steps:
   - name: Checkout repository
     uses: actions/checkout@v3
@@ -29,4 +29,4 @@ steps:
     with:
       name: qodana-report
       path: qodana/report
-  ```
+```
