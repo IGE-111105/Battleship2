@@ -55,11 +55,12 @@ public class CompassTest {
 	 */
 	@Test
 	void toStringTest() {
-		assertEquals("n", Compass.NORTH.toString(), "Error: String representation for NORTH should be 'n'.");
-		assertEquals("s", Compass.SOUTH.toString(), "Error: String representation for SOUTH should be 's'.");
-		assertEquals("e", Compass.EAST.toString(), "Error: String representation for EAST should be 'e'.");
-		assertEquals("o", Compass.WEST.toString(), "Error: String representation for WEST should be 'o'.");
+	 assertEquals("n", Compass.NORTH.toString(), "Error: String representation for NORTH should be 'n'.");
+	 assertEquals("s", Compass.SOUTH.toString(), "Error: String representation for SOUTH should be 's'.");
+	 assertEquals("e", Compass.EAST.toString(), "Error: String representation for EAST should be 'e'.");
+	 assertEquals("o", Compass.WEST.toString(), "Error: String representation for WEST should be 'o'.");
 	}
+
 
 	/**
 	 * Test for the charToCompass method (all conditions true).

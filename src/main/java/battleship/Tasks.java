@@ -15,8 +15,12 @@ public class Tasks {
 	 * The constant LOGGER.
 	 */
 	private static final Logger LOGGER = LogManager.getLogger();
+	/**
+	 * The On board update.
+	 */
 	public static java.util.function.Consumer<IGame> onBoardUpdate = null;
 	/**
+	 *
 	 * The constant GOODBYE_MESSAGE.
 	 */
 	private static final String GOODBYE_MESSAGE = "Bons ventos!";
@@ -34,6 +38,8 @@ public class Tasks {
 	private static final String STATUS = "estado";
 	private static final String SIMULA = "simula";
 	private static final String SCOREBOARD = "scoreboard";
+	private static final String TEMPO = "tempo";
+
 	/**
 	 * This task also tests the fighting element of a round of three shots
 	 */
@@ -52,6 +58,7 @@ public class Tasks {
 				case GERAFROTA:
 					myFleet = Fleet.createRandom();
 					game = new Game(myFleet);
+					game.startGame();
 					game.printMyBoard(false, true);
 					if (onBoardUpdate != null) onBoardUpdate.accept(game);
 					break;
@@ -116,6 +123,15 @@ public class Tasks {
 				case SCOREBOARD:
 					ScoreboardManager.printScoreboard();
 					break;
+
+				case TEMPO:
+					if (game != null) {
+						System.out.println("Tempo total do jogo: " + game.getTotalGameTime());
+						System.out.println("Tempo da última jogada: " + game.getTurnTime());
+					} else {
+						System.out.println("Nenhum jogo iniciado!");
+					}
+					break;
 				default:
 					System.out.println("Que comando é esse??? Repete ...");
 			}
@@ -140,8 +156,10 @@ public class Tasks {
 		System.out.println("- " + TIROS + ": Lista os tiros válidos realizados (* = tiro em navio, o = tiro na água)");
 		System.out.println("- " + DESISTIR + ": Encerra o jogo.");
 		System.out.println("- " + SCOREBOARD + ": Mostra o histórico dos jogos anteriores.");
+		System.out.println("- " + TEMPO + ": Mostra o tempo total do jogo e tempo da última jogada.");
 		System.out.println("===============================================================");
 	}
+
 	/**
 	 * This operation allows the build up of a fleet, given user data
 	 *

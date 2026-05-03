@@ -38,8 +38,12 @@ public class Main extends Application
 		gameThread.start();
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
+
+	public static void main(String[] args)
+    {
+		System.out.println("***  Battleship  ***");
+
+		Tasks.menu();
+    }
 
 }

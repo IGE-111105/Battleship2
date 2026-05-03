@@ -7,9 +7,8 @@ import java.util.List;
 
 /**
  * Test class for Ship.
- * Author: ${user.name}
- * Date: ${current_date}
- * Time: ${current_time}
+ * Author: Marta Fonseca
+ * Date: 3/5/2026
  * Cyclomatic Complexity for each method:
  * - Constructor: 1
  * - getCategory: 1
