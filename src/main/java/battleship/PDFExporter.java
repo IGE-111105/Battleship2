@@ -16,13 +16,7 @@ public class PDFExporter {
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
 
-            // 🔹 Conteúdo do PDF
-            document.add(new Paragraph("=== RESULTADOS DO JOGO ==="));
-            document.add(new Paragraph("Jogo terminado."));
-            document.add(new Paragraph("-------------------------"));
-
-            // 🔹 Informação disponível
-            document.add(new Paragraph("Navios restantes: " + game.getRemainingShips()));
+            extracted(game, document);
 
             document.close();
 
@@ -31,5 +25,15 @@ public class PDFExporter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void extracted(Game game, Document document) {
+        // 🔹 Conteúdo do PDF
+        document.add(new Paragraph("=== RESULTADOS DO JOGO ==="));
+        document.add(new Paragraph("Jogo terminado."));
+        document.add(new Paragraph("-------------------------"));
+
+        // 🔹 Informação disponível
+        document.add(new Paragraph("Navios restantes: " + game.getRemainingShips()));
     }
 }
