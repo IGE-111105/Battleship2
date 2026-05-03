@@ -137,7 +137,7 @@ mvn test
 
 ---
 
-🔄 Continuous Integration
+##🔄 Continuous Integration
 This project uses GitHub Actions for Continuous Integration (CI).
 The workflow runs automatically on every push and pull request to the main branch.
 Workflow actions:
