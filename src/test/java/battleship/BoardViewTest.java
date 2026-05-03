@@ -13,6 +13,21 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Test class for BoardView.
+ * Author: Marta Fonseca
+ * Date: 3/5/2026
+ * Cyclomatic Complexity for each method:
+ * - testRefreshWithEmptyShipsAndMoves: 1
+ * - testRefreshWithFloatingShip: 1
+ * - testRefreshWithSunkenShip: 1
+ * - testRefreshWithAdjacentPositionOutside: 1
+ * - testRefreshWithMovesHittingShip: 1
+ * - testRefreshWithMovesMissingShip: 1
+ * - testRefreshWithShotOutsideBoard: 1
+ * - testBoardViewInitialization: 1
+ */
+
 class BoardViewTest {
 
     private BoardView boardView;

@@ -8,6 +8,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Class for Main.
+ * Author: Marta Fonseca
+ * Date: 3/5/2026
+ * Cyclomatic Complexity for each method:
+ * - start: 1
+ * - main: 1
+ */
 class MainTest {
 
     private Main main;

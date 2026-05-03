@@ -11,6 +11,16 @@ import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for Tasks.
+ * Author: Marta Fonseca
+ * Date: 3/5/2026
+ * Time: ${current_time}
+ * Cyclomatic Complexity for each method:
+ * - testReadClassicPosition: 1
+ * - testBuildShip: 1
+ */
+
 class TasksTest {
 
     private ByteArrayOutputStream outputStream;
