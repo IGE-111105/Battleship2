@@ -4,6 +4,9 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.FileNotFoundException;
 
 public class PDFExporter {
 
@@ -12,9 +15,7 @@ public class PDFExporter {
         try {
             String filePath = "game_results.pdf";
 
-            PdfWriter writer = new PdfWriter(filePath);
-            PdfDocument pdf = new PdfDocument(writer);
-            Document document = new Document(pdf);
+            Document document = getDocument(filePath);
 
             // 🔹 Conteúdo do PDF
             document.add(new Paragraph("=== RESULTADOS DO JOGO ==="));
@@ -31,5 +32,12 @@ public class PDFExporter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static @NotNull Document getDocument(String filePath) throws FileNotFoundException {
+        PdfWriter writer = new PdfWriter(filePath);
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+        return document;
     }
 }
