@@ -168,4 +168,49 @@ public class FrigateTest {
 		assertThrows(NullPointerException.class, () -> new Frigate(Compass.NORTH, null),
 				"Error: NullPointerException should be thrown for null position.");
 	}
+	@Test
+	void testConstructorSouth() {
+		Frigate southFrigate = new Frigate(Compass.SOUTH, new Position(5, 5));
+		List<IPosition> positions = southFrigate.getPositions();
+
+		assertAll("Validation of Frigate constructor with SOUTH bearing",
+				() -> assertNotNull(southFrigate,
+						"Error: Frigate instance should not be null."),
+				() -> assertEquals("Fragata", southFrigate.getCategory(),
+						"Error: Frigate category should be 'Fragata'."),
+				() -> assertEquals(Compass.SOUTH, southFrigate.getBearing(),
+						"Error: Frigate bearing should be SOUTH."),
+				() -> assertEquals(4, southFrigate.getSize(),
+						"Error: Frigate size should be 4."),
+				() -> assertEquals(4, positions.size(),
+						"Error: Frigate should have exactly 4 positions."),
+				() -> assertEquals(new Position(5, 5), positions.get(0),
+						"Error: First position is incorrect for SOUTH."),
+				() -> assertEquals(new Position(6, 5), positions.get(1),
+						"Error: Second position is incorrect for SOUTH."),
+				() -> assertEquals(new Position(7, 5), positions.get(2),
+						"Error: Third position is incorrect for SOUTH."),
+				() -> assertEquals(new Position(8, 5), positions.get(3),
+						"Error: Fourth position is incorrect for SOUTH.")
+		);
+	}
+
+	@Test
+	void testHorizontalFrigateBoundaries() {
+		Frigate eastFrigate = new Frigate(Compass.EAST, new Position(5, 5));
+
+		assertAll("Validation of horizontal Frigate boundaries",
+				() -> assertEquals(5, eastFrigate.getTopMostPos(),
+						"Error: topmost position should be 5 for a horizontal Frigate."),
+				() -> assertEquals(5, eastFrigate.getBottomMostPos(),
+						"Error: bottommost position should be 5 for a horizontal Frigate."),
+				() -> assertEquals(5, eastFrigate.getLeftMostPos(),
+						"Error: leftmost position should be 5 for a horizontal Frigate."),
+				() -> assertEquals(8, eastFrigate.getRightMostPos(),
+						"Error: rightmost position should be 8 for a horizontal Frigate.")
+		);
+	}
+
+
+
 }

@@ -182,4 +182,91 @@ public class PositionTest {
 				"Incorrect string representation: expected '" + expected +
 						"' but got '" + position.toString() + "'");
 	}
+	@Test
+	void constructorWithClassicCoordinates() {
+		Position pos = new Position('C', 4);
+
+		assertAll("Validação do construtor com coordenadas clássicas",
+				() -> assertEquals(2, pos.getRow(),
+						"Error: expected classic row C to correspond to row index 2."),
+				() -> assertEquals(3, pos.getColumn(),
+						"Error: expected classic column 4 to correspond to column index 3."),
+				() -> assertEquals('C', pos.getClassicRow(),
+						"Error: expected classic row to be C."),
+				() -> assertEquals(4, pos.getClassicColumn(),
+						"Error: expected classic column to be 4.")
+		);
+	}
+
+	@Test
+	void constructorWithLowercaseClassicRow() {
+		Position pos = new Position('c', 4);
+
+		assertAll("Validação do construtor com letra minúscula",
+				() -> assertEquals(2, pos.getRow(),
+						"Error: expected lowercase classic row c to correspond to row index 2."),
+				() -> assertEquals(3, pos.getColumn(),
+						"Error: expected classic column 4 to correspond to column index 3.")
+		);
+	}
+
+	@Test
+	void randomPositionShouldBeInsideBoard() {
+		Position random = Position.randomPosition();
+
+		assertAll("Validação de posição aleatória",
+				() -> assertNotNull(random,
+						"Error: expected randomPosition to return a non-null position."),
+				() -> assertTrue(random.isInside(),
+						"Error: expected random position to be inside the board.")
+		);
+	}
+
+	@Test
+	void adjacentPositionsFromCenterShouldReturnEightPositions() {
+		Position center = new Position(5, 5);
+
+		var adjacents = center.adjacentPositions();
+
+		assertAll("Validação das posições adjacentes no centro do tabuleiro",
+				() -> assertEquals(8, adjacents.size(),
+						"Error: expected a center position to have 8 adjacent positions."),
+				() -> assertTrue(adjacents.contains(new Position(4, 5)),
+						"Error: expected north adjacent position to be included."),
+				() -> assertTrue(adjacents.contains(new Position(5, 6)),
+						"Error: expected east adjacent position to be included."),
+				() -> assertTrue(adjacents.contains(new Position(6, 5)),
+						"Error: expected south adjacent position to be included."),
+				() -> assertTrue(adjacents.contains(new Position(5, 4)),
+						"Error: expected west adjacent position to be included.")
+		);
+	}
+
+	@Test
+	void adjacentPositionsFromCornerShouldReturnThreePositions() {
+		Position corner = new Position(0, 0);
+
+		var adjacents = corner.adjacentPositions();
+
+		assertAll("Validação das posições adjacentes no canto do tabuleiro",
+				() -> assertEquals(3, adjacents.size(),
+						"Error: expected top-left corner to have only 3 valid adjacent positions."),
+				() -> assertTrue(adjacents.contains(new Position(0, 1)),
+						"Error: expected east adjacent position to be included."),
+				() -> assertTrue(adjacents.contains(new Position(1, 0)),
+						"Error: expected south adjacent position to be included."),
+				() -> assertTrue(adjacents.contains(new Position(1, 1)),
+						"Error: expected diagonal adjacent position to be included.")
+		);
+	}
+
+	@Test
+	void adjacentPositionsFromBorderShouldReturnFivePositions() {
+		Position border = new Position(0, 5);
+
+		var adjacents = border.adjacentPositions();
+
+		assertEquals(5, adjacents.size(),
+				"Error: expected a non-corner border position to have 5 valid adjacent positions.");
+	}
 }

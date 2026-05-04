@@ -1,0 +1,147 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > PDFExporter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">battleship</a>
+</div>
+
+<h1>Coverage Summary for Class: PDFExporter (battleship)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PDFExporter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    84.6%
+  </span>
+  <span class="absValue">
+    (11/13)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package battleship;
+&nbsp;
+&nbsp;import com.itextpdf.kernel.pdf.PdfWriter;
+&nbsp;import com.itextpdf.kernel.pdf.PdfDocument;
+&nbsp;import com.itextpdf.layout.Document;
+&nbsp;import com.itextpdf.layout.element.Paragraph;
+&nbsp;import org.jetbrains.annotations.NotNull;
+&nbsp;
+&nbsp;import java.io.FileNotFoundException;
+&nbsp;
+<b class="nc">&nbsp;public class PDFExporter {</b>
+&nbsp;
+&nbsp;    public static void exportGame(Game game) {
+&nbsp;
+&nbsp;        try {
+<b class="fc">&nbsp;            String filePath = &quot;game_results.pdf&quot;;</b>
+&nbsp;
+<b class="fc">&nbsp;            Document document = getDocument(filePath);</b>
+&nbsp;
+&nbsp;            // 🔹 Conteúdo do PDF
+<b class="fc">&nbsp;            document.add(new Paragraph(&quot;=== RESULTADOS DO JOGO ===&quot;));</b>
+<b class="fc">&nbsp;            document.add(new Paragraph(&quot;Jogo terminado.&quot;));</b>
+<b class="fc">&nbsp;            document.add(new Paragraph(&quot;-------------------------&quot;));</b>
+&nbsp;
+&nbsp;            // 🔹 Informação disponível
+<b class="fc">&nbsp;            document.add(new Paragraph(&quot;Navios restantes: &quot; + game.getRemainingShips()));</b>
+&nbsp;
+&nbsp;            document.close();
+&nbsp;
+<b class="fc">&nbsp;            System.out.println(&quot;PDF criado com sucesso!&quot;);</b>
+&nbsp;
+&nbsp;        } catch (Exception e) {
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private static @NotNull Document getDocument(String filePath) throws FileNotFoundException {
+<b class="fc">&nbsp;        PdfWriter writer = new PdfWriter(filePath);</b>
+<b class="fc">&nbsp;        PdfDocument pdf = new PdfDocument(writer);</b>
+<b class="fc">&nbsp;        Document document = new Document(pdf);</b>
+<b class="fc">&nbsp;        return document;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-05-05 00:12</div>
+</div>
+</body>
+</html>
