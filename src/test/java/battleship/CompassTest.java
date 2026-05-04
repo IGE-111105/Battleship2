@@ -89,4 +89,32 @@ public class CompassTest {
 	void charToCompass3() {
 		assertNull(Compass.charToCompass('\0'), "Error: Null character should map to null.");
 	}
+	@Test
+	void randomBearingShouldReturnValidCompassValue() {
+		Compass random = Compass.randomBearing();
+
+		assertNotNull(random,
+				"Error: expected randomBearing to return a non-null Compass value.");
+		assertTrue(
+				random == Compass.NORTH ||
+						random == Compass.SOUTH ||
+						random == Compass.EAST ||
+						random == Compass.WEST,
+				"Error: expected randomBearing to return one of the defined Compass values."
+		);
+	}
+
+	@Test
+	void valuesShouldContainFourDirections() {
+		Compass[] values = Compass.values();
+
+		assertAll("Validation of all Compass enum values",
+				() -> assertEquals(4, values.length,
+						"Error: expected Compass to contain exactly four directions."),
+				() -> assertArrayEquals(
+						new Compass[] {Compass.NORTH, Compass.SOUTH, Compass.EAST, Compass.WEST},
+						values,
+						"Error: expected Compass values to follow NORTH, SOUTH, EAST, WEST order.")
+		);
+	}
 }
