@@ -2,7 +2,8 @@ package battleship;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
-
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -195,4 +196,108 @@ import java.util.ArrayList;
 			fleet.addShip(ship);
 			assertDoesNotThrow(fleet::printStatus, "Error: printStatus should not throw any exceptions.");
 		}
+	@Test
+	void testCreateRandom() {
+		IFleet randomFleet = Fleet.createRandom();
+
+		assertAll("Validação da criação aleatória de frota",
+				() -> assertNotNull(randomFleet,
+						"Error: expected random fleet to be created, but got null."),
+				() -> assertEquals(Fleet.FLEET_SIZE, randomFleet.getShips().size(),
+						"Error: expected random fleet to contain exactly FLEET_SIZE ships."),
+				() -> assertEquals(Fleet.FLEET_SIZE, randomFleet.getFloatingShips().size(),
+						"Error: expected all randomly created ships to be floating initially.")
+		);
+	}
+
+	@Test
+	void testGetSunkShipsInitiallyEmpty() {
+		IShip ship = new Barge(Compass.NORTH, new Position(1, 1));
+		fleet.addShip(ship);
+
+		List<IShip> sunkShips = fleet.getSunkShips();
+
+		assertTrue(sunkShips.isEmpty(),
+				"Error: expected no sunk ships before any ship position is shot.");
+	}
+
+	@Test
+	void testGetSunkShipsAfterSinkingShip() {
+		IShip ship = new Barge(Compass.NORTH, new Position(1, 1));
+		fleet.addShip(ship);
+
+		ship.getPositions().get(0).shoot();
+
+		List<IShip> sunkShips = fleet.getSunkShips();
+
+		assertAll("Validação dos navios afundados",
+				() -> assertEquals(1, sunkShips.size(),
+						"Error: expected exactly one sunk ship after shooting the only position of a Barge."),
+				() -> assertEquals(ship, sunkShips.get(0),
+						"Error: expected the sunk ship to be the Barge that was shot.")
+		);
+	}
+
+	@Test
+	void testPrintShipsDoesNotThrow() {
+		List<IShip> ships = new ArrayList<>();
+		ships.add(new Barge(Compass.NORTH, new Position(1, 1)));
+
+		assertDoesNotThrow(() -> fleet.printShips(ships),
+				"Error: expected printShips not to throw when receiving a valid ship list.");
+	}
+
+	@Test
+	void testPrintShipsByCategoryDoesNotThrow() {
+		IShip barge = new Barge(Compass.NORTH, new Position(1, 1));
+		fleet.addShip(barge);
+
+		assertDoesNotThrow(() -> fleet.printShipsByCategory("Barca"),
+				"Error: expected printShipsByCategory not to throw for an existing category.");
+	}
+
+	@Test
+	void testPrintFloatingShipsDoesNotThrow() {
+		IShip ship = new Barge(Compass.NORTH, new Position(1, 1));
+		fleet.addShip(ship);
+
+		assertDoesNotThrow(() -> fleet.printFloatingShips(),
+				"Error: expected printFloatingShips not to throw when fleet has floating ships.");
+	}
+
+	@Test
+	void testPrintAllShipsDoesNotThrow() {
+		IShip ship = new Barge(Compass.NORTH, new Position(1, 1));
+		fleet.addShip(ship);
+
+		assertDoesNotThrow(() -> fleet.printAllShips(),
+				"Error: expected printAllShips not to throw when fleet has ships.");
+	}
+
+	@Test
+	void testPrintStatusOutput() {
+		IShip ship = new Barge(Compass.NORTH, new Position(1, 1));
+		fleet.addShip(ship);
+
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		PrintStream originalOut = System.out;
+
+		try {
+			System.setOut(new PrintStream(output));
+			fleet.printStatus();
+		} finally {
+			System.setOut(originalOut);
+		}
+
+		String printedText = output.toString();
+
+		assertAll("Validação do texto impresso por printStatus",
+				() -> assertTrue(printedText.contains("Estado da Frota"),
+						"Error: expected printStatus output to contain 'Estado da Frota'."),
+				() -> assertTrue(printedText.contains("1 a flutuar"),
+						"Error: expected printStatus output to show one floating ship."),
+				() -> assertTrue(printedText.contains("0 afundados"),
+						"Error: expected printStatus output to show zero sunk ships.")
+		);
+	}
 	}
