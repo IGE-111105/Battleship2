@@ -397,30 +397,48 @@ public class Game implements IGame
 
 		assert pos != null;
 
-		if (!pos.isInside()) {
+		if (isInvalidShot(pos)) {
 			countInvalidShots++;
 			return new ShotResult(false, false, null, false);
 		}
 
-		if (isRepeated || repeatedShot(pos)) {
+		if (isRepeatedShot(pos, isRepeated)) {
 			countRepeatedShots++;
 			return new ShotResult(true, true, null, false);
 		}
 
 		IShip ship = myFleet.shipAt(pos);
-		if (ship == null)
+
+		if (isMissedShot(ship)) {
 			return new ShotResult(true, false, null, false);
-		else
-		{
-			ship.shoot(pos);
-			countHits++;
-			if (!ship.stillFloating()) {
-				countSinks++;
-			}
-			return new ShotResult(true, false, ship, !ship.stillFloating());
 		}
+
+		return handleHitShot(pos, ship);
+	}
+	private boolean isInvalidShot(IPosition pos) {
+		return !pos.isInside();
 	}
 
+	private boolean isRepeatedShot(IPosition pos, boolean isRepeated) {
+		return isRepeated || repeatedShot(pos);
+	}
+
+	private boolean isMissedShot(IShip ship) {
+		return ship == null;
+	}
+
+	private ShotResult handleHitShot(IPosition pos, IShip ship) {
+		ship.shoot(pos);
+		countHits++;
+
+		boolean shipSunk = !ship.stillFloating();
+
+		if (shipSunk) {
+			countSinks++;
+		}
+
+		return new ShotResult(true, false, ship, shipSunk);
+	}
 	@Override
 	public int getRepeatedShots()
 	{
