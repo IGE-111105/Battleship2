@@ -208,24 +208,21 @@ public class Position implements IPosition {
 	 */
 	@Override
 	public boolean equals(Object otherPosition) {
+		boolean isEqual = false;
+
 		if (this == otherPosition) {
-			return true;
+			isEqual = true;
+		} else if (otherPosition instanceof IPosition other) {
+			isEqual = this.row == other.getRow()
+					&& this.column == other.getColumn();
 		}
-		if (otherPosition instanceof IPosition) {
-			IPosition other = (IPosition) otherPosition;
-			return this.row == other.getRow() && this.column == other.getColumn();
-		}
-		return false;
+
+		return isEqual;
 	}
 
-	/**
-	 * Returns a hash code for this position based on its row and column.
-	 *
-	 * @return the hash code
-	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(row, column, isOccupied, isHit);
+		return Objects.hash(row, column);
 	}
 
 	/**
