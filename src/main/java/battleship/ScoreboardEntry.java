@@ -12,13 +12,27 @@ public class ScoreboardEntry {
     public ScoreboardEntry() {
     }
 
+    public ScoreboardEntry(ScoreboardEntryData data) {
+        this.timestamp = data.timestamp();
+        this.moves = data.moves();
+        this.shots = data.shots();
+        this.hits = data.hits();
+        this.sunkShips = data.sunkShips();
+        this.result = data.result();
+    }
+
     public ScoreboardEntry(String timestamp, int moves, int shots, int hits, int sunkShips, String result) {
-        this.timestamp = timestamp;
-        this.moves = moves;
-        this.shots = shots;
-        this.hits = hits;
-        this.sunkShips = sunkShips;
-        this.result = result;
+        this(new ScoreboardEntryData(timestamp, moves, shots, hits, sunkShips, result));
+    }
+
+    public record ScoreboardEntryData(
+            String timestamp,
+            int moves,
+            int shots,
+            int hits,
+            int sunkShips,
+            String result
+    ) {
     }
 
     public String getTimestamp() {

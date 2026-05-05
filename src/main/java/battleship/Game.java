@@ -246,53 +246,76 @@ public class Game implements IGame
 	 * @throws RuntimeException if there is an error during the JSON serialization of the shots.
 	 */
 	public String randomEnemyFire() {
-
-		// Criar uma instância de Random com uma seed baseada no timestamp atual
 		Random random = new Random(System.currentTimeMillis());
 
-		Set<IPosition> usablePositions = new HashSet<IPosition>();
-		for (int r = 0; r < BOARD_SIZE; r++)
-			for (int c = 0; c < BOARD_SIZE; c++)
-				usablePositions.add(new Position(r, c));
-
-		this.myFleet.getSunkShips().forEach(ship -> usablePositions.removeAll(ship.getAdjacentPositions()));
-		this.alienMoves.forEach(move ->  usablePositions.removeAll(move.getShots()));
-
+		Set<IPosition> usablePositions = getUsableEnemyShotPositions();
 		List<IPosition> candidateShots = new ArrayList<>(usablePositions);
+		List<IPosition> shots = selectRandomShots(candidateShots, random);
 
-		// Criar lista para armazenar os tiros
-		List<IPosition> shots = new ArrayList<IPosition>();
-
-		System.out.println();
-		// Gerar coordenadas únicas até atingir o número definido por NUMBER_SHOTS
-
-		IPosition newShot = null;
-		if (candidateShots.size() >= Game.NUMBER_SHOTS)
-			while (shots.size() < Game.NUMBER_SHOTS) {
-				newShot = candidateShots.get(random.nextInt(candidateShots.size()));
-				if (!shots.contains(newShot))
-					shots.add(newShot);
-			}
-		else {
-			while (shots.size() < candidateShots.size()) {
-				newShot = candidateShots.get(random.nextInt(candidateShots.size()));
-				if (!shots.contains(newShot))
-					shots.add(newShot);
-			}
-			while (shots.size() < Game.NUMBER_SHOTS)
-				shots.add(newShot);
-		}
-
-		System.out.print("rajada ");
-		for (IPosition shot : shots)
-			System.out.print(shot + " ");
-		System.out.println();
+		printEnemyShots(shots);
 
 		this.fireShots(shots);
 
 		return Game.jsonShots(shots);
 	}
+	private Set<IPosition> getUsableEnemyShotPositions() {
+		Set<IPosition> usablePositions = new HashSet<>();
 
+		for (int r = 0; r < BOARD_SIZE; r++) {
+			for (int c = 0; c < BOARD_SIZE; c++) {
+				usablePositions.add(new Position(r, c));
+			}
+		}
+
+		this.myFleet.getSunkShips()
+				.forEach(ship -> usablePositions.removeAll(ship.getAdjacentPositions()));
+
+		this.alienMoves
+				.forEach(move -> usablePositions.removeAll(move.getShots()));
+
+		return usablePositions;
+	}
+
+	private List<IPosition> selectRandomShots(List<IPosition> candidateShots, Random random) {
+		List<IPosition> shots = new ArrayList<>();
+
+		if (candidateShots.size() >= Game.NUMBER_SHOTS) {
+			addUniqueRandomShots(shots, candidateShots, random, Game.NUMBER_SHOTS);
+		} else {
+			addUniqueRandomShots(shots, candidateShots, random, candidateShots.size());
+			fillRemainingShotsWithLastPosition(shots);
+		}
+
+		return shots;
+	}
+
+	private void addUniqueRandomShots(List<IPosition> shots, List<IPosition> candidateShots, Random random, int targetSize) {
+		while (shots.size() < targetSize) {
+			IPosition newShot = candidateShots.get(random.nextInt(candidateShots.size()));
+			if (!shots.contains(newShot)) {
+				shots.add(newShot);
+			}
+		}
+	}
+
+	private void fillRemainingShotsWithLastPosition(List<IPosition> shots) {
+		IPosition lastShot = shots.isEmpty() ? null : shots.get(shots.size() - 1);
+
+		while (shots.size() < Game.NUMBER_SHOTS) {
+			shots.add(lastShot);
+		}
+	}
+
+	private void printEnemyShots(List<IPosition> shots) {
+		System.out.println();
+		System.out.print("rajada ");
+
+		for (IPosition shot : shots) {
+			System.out.print(shot + " ");
+		}
+
+		System.out.println();
+	}
 
 	/**
 	 * Reads and processes the enemy fire input from the specified scanner.
@@ -397,30 +420,48 @@ public class Game implements IGame
 
 		assert pos != null;
 
-		if (!pos.isInside()) {
+		if (isInvalidShot(pos)) {
 			countInvalidShots++;
 			return new ShotResult(false, false, null, false);
 		}
 
-		if (isRepeated || repeatedShot(pos)) {
+		if (isRepeatedShot(pos, isRepeated)) {
 			countRepeatedShots++;
 			return new ShotResult(true, true, null, false);
 		}
 
 		IShip ship = myFleet.shipAt(pos);
-		if (ship == null)
+
+		if (isMissedShot(ship)) {
 			return new ShotResult(true, false, null, false);
-		else
-		{
-			ship.shoot(pos);
-			countHits++;
-			if (!ship.stillFloating()) {
-				countSinks++;
-			}
-			return new ShotResult(true, false, ship, !ship.stillFloating());
 		}
+
+		return handleHitShot(pos, ship);
+	}
+	private boolean isInvalidShot(IPosition pos) {
+		return !pos.isInside();
 	}
 
+	private boolean isRepeatedShot(IPosition pos, boolean isRepeated) {
+		return isRepeated || repeatedShot(pos);
+	}
+
+	private boolean isMissedShot(IShip ship) {
+		return ship == null;
+	}
+
+	private ShotResult handleHitShot(IPosition pos, IShip ship) {
+		ship.shoot(pos);
+		countHits++;
+
+		boolean shipSunk = !ship.stillFloating();
+
+		if (shipSunk) {
+			countSinks++;
+		}
+
+		return new ShotResult(true, false, ship, shipSunk);
+	}
 	@Override
 	public int getRepeatedShots()
 	{
