@@ -33,18 +33,31 @@ public class BoardView extends GridPane {
         }
     }
 
-    /** Called from the game thread — safely dispatches to the JavaFX thread */
+    /**
+     * Called from the game thread — safely dispatches to the JavaFX thread
+     */
     public void refresh(IGame game) {
         Platform.runLater(() -> update(game.getMyFleet(), game.getAlienMoves()));
     }
 
     private void update(IFleet fleet, List<IMove> moves) {
         // Reset to water
+        resetBoard();
+
+        // Draw ships
+        drawShips(fleet);
+
+        // Draw shots on top
+        drawShots(fleet, moves);
+    }
+
+    private void resetBoard() {
         for (int r = 0; r < SIZE; r++)
             for (int c = 0; c < SIZE; c++)
                 cells[r][c].setFill(Color.LIGHTBLUE);
+    }
 
-        // Draw ships
+    private void drawShips(IFleet fleet) {
         for (IShip ship : fleet.getShips()) {
             Color color = ship.stillFloating() ? Color.SLATEGRAY : Color.DARKRED;
             for (IPosition pos : ship.getPositions())
@@ -54,12 +67,13 @@ public class BoardView extends GridPane {
                     if (pos.isInside())
                         cells[pos.getRow()][pos.getColumn()].setFill(Color.LIGHTYELLOW);
         }
+    }
 
-        // Draw shots on top
+    private void drawShots(IFleet fleet, List<IMove> moves) {
         for (IMove move : moves) {
             for (IPosition shot : move.getShots()) {
                 if (!shot.isInside()) continue;
-                IShip ship = fleet.shipAt(shot);  // null = missed water
+                IShip ship = fleet.shipAt(shot);
                 cells[shot.getRow()][shot.getColumn()]
                         .setFill(ship != null ? Color.ORANGERED : Color.WHITE);
             }
