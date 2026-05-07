@@ -1,3 +1,4 @@
+// Refactored: Extract Method applied to update() method
 package battleship;
 
 import javafx.application.Platform;
