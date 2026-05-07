@@ -89,7 +89,8 @@ public class Move implements IMove {
 			}
 		}
 
-		int outsideShots = Game.NUMBER_SHOTS - validShots - repeatedShots;
+		int totalAccountedShots = validShots + repeatedShots;
+		int outsideShots = Game.NUMBER_SHOTS - totalAccountedShots;
 
 		if (verbose) {
 			printVerboseOutput(validShots, repeatedShots, missedShots, outsideShots, sunkBoatsCount, hitsPerBoat);
